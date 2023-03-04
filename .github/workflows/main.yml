@@ -28,7 +28,7 @@ jobs:
           pngQuality: '60'
           webpQuality: '60'
       - name: Create New Pull Request If Needed
-        if: github.event_name == 'push' && contains(github.event.head_commit.message, '压缩图片')
+        if: steps.calibre.outputs.markdown != ''
         uses: peter-evans/create-pull-request@v3
         with:
           title: '[ci skip] 🛠 压缩图片'

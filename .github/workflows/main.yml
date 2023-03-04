@@ -15,7 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      pull_request: write
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2

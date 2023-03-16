@@ -16,5 +16,5 @@ jobs:
       - name: Auto Merge
         uses: pascalgn/automerge-action@v0.15.6
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          method: merge
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          MERGE_DELETE_BRANCH: "true"

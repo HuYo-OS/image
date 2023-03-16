@@ -27,29 +27,9 @@ jobs:
           jpegProgressive: false
           pngQuality: '60'
           webpQuality: '60'
-      - name: Merge pull request if needed
-        if: steps.calibre.outputs.markdown != '' && github.context.actor == 'github-actions'
-        uses: actions/github-script@v4
+      - name: Merge Pull Request
+        if: github.actor == 'github-actions[bot]'
+        uses: pullreminders/merge@v0.12.2
         with:
-          script: |
-            const { data: pullRequest } = await github.pulls.get({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: context.payload.pull_request.number
-            });
-            if (pullRequest.mergeable === true) {
-              await github.pulls.merge({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: context.payload.pull_request.number
-              });
-            }
-      - name: Create New Pull Request If Needed
-        if: steps.calibre.outputs.markdown != '' && github.context.actor != 'github-actions'
-        uses: peter-evans/create-pull-request@v3
-        with:
-          title: '[ci skip] 🛠 压缩图片'
-          branch-suffix: timestamp
-          commit-message: '🛠 压缩图片'
-          body: ${{ steps.calibre.outputs.markdown }}
-          reviewers: 'HuYo-OS'
+          repo-token: ${{ secrets.MYGITHUB_TOKEN }}
+          pull-number: ${{ github.event.pull_request.number }}

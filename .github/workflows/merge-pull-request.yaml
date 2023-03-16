@@ -1,20 +1,18 @@
-name: Merge me!
+name: Auto Merge PR
 
 on:
-  workflow_run:
+  pull_request:
     types:
-      - completed
-    workflows:
-      - 'Continuous Integration'
+      - opened
 
 jobs:
-  merge-me:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    name: Merge me!
+  automerge:
     runs-on: ubuntu-latest
     steps:
-      - name: Merge me!
-        uses: HuYo-OS/Resources@main
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Auto Merge
+        uses: pascalgn/automerge-action@v0.15.6
         with:
-          GITHUB_TOKEN: ${{ secrets.MYGITHUB_TOKEN }}
-    timeout-minutes: 5
+          github_token: ${{ secrets.MYGITHUB_TOKEN }}
+          merge_method: merge

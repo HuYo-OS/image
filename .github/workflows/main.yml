@@ -1,9 +1,6 @@
 name: 压缩图片
 permissions: write-all
 on:
-  check_suite:
-    types:
-      - completed
   push:
     branches:
       - main
@@ -38,7 +35,9 @@ jobs:
           branch-suffix: timestamp
           commit-message: '🛠 压缩图片'
           body: ${{ steps.calibre.outputs.markdown }}
+
       - name: Merge me!
         uses: ridedott/merge-me-action@v2
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_LOGIN: HuYo-OS
+          GITHUB_TOKEN: ${{ secrets.MYGITHUB_TOKEN }}

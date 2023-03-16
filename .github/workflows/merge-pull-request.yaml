@@ -11,15 +11,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Check submitter
-        run: |
-          if [ "$GITHUB_EVENT_NAME" == "pull_request" ]; then
-            TITLE=$(jq -r '.pull_request.title' "$GITHUB_EVENT_PATH")
-            if [[ "$TITLE" != *"🛠 压缩图片"* ]]; then
-              echo "This pull request title does not contain the specified string. Skipping auto-merge."
-              exit 78
-            fi
-          fi
       - name: Auto Merge
         uses: pascalgn/automerge-action@v0.15.6
         with:

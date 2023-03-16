@@ -12,6 +12,7 @@ on:
   workflow_dispatch:
 jobs:
   build:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     name: calibreapp/image-actions
     runs-on: ubuntu-latest
     steps:

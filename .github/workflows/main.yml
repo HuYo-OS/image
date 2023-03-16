@@ -35,14 +35,4 @@ jobs:
           branch-suffix: timestamp
           commit-message: '🛠 压缩图片'
           body: ${{ steps.calibre.outputs.markdown }}
-
-      - name: Merge Pull Request
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push' && github.event.pull_request.merged == false
-        uses: ridedott/merge-me-action@v2.2.2
-        with:
-          commit-message: Merge Pull Request
-          commit-prefix: Merge
-          GITHUB_LOGIN: dependabot[bot]
-          MERGE_METHOD: SQUASH
-          DISABLED_FOR_MANUAL_CHANGES: false
-          github-token: ${{ secrets.MYGITHUB_TOKEN }}
+  

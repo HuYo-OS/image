@@ -14,9 +14,9 @@ jobs:
       - name: Check submitter
         run: |
           if [ "$GITHUB_EVENT_NAME" == "pull_request" ]; then
-            SUBMITTER=$(jq -r '.pull_request.user.login' "$GITHUB_EVENT_PATH")
-            if [ "$SUBMITTER" != "username" ]; then
-              echo "This pull request is not submitted by the specified user. Skipping auto-merge."
+            TITLE=$(jq -r '.pull_request.title' "$GITHUB_EVENT_PATH")
+            if [[ "$TITLE" != *"🛠 压缩图片"* ]]; then
+              echo "This pull request title does not contain the specified string. Skipping auto-merge."
               exit 78
             fi
           fi

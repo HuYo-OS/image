@@ -1,6 +1,9 @@
 name: 压缩图片
 permissions: write-all
 on:
+  check_suite:
+    types:
+      - completed
   push:
     branches:
       - main
@@ -27,9 +30,15 @@ jobs:
           jpegProgressive: false
           pngQuality: '60'
           webpQuality: '60'
-      - name: Merge Pull Request
-        if: github.actor == 'github-actions[bot]'
-        uses: pullreminders/merge@v0.12.2
+      - name: Create New Pull Request If Needed
+        if: steps.calibre.outputs.markdown != ''
+        uses: peter-evans/create-pull-request@v3
         with:
-          repo-token: ${{ secrets.MYGITHUB_TOKEN }}
-          pull-number: ${{ github.event.pull_request.number }}
+          title: '[ci skip] 🛠 压缩图片'
+          branch-suffix: timestamp
+          commit-message: '🛠 压缩图片'
+          body: ${{ steps.calibre.outputs.markdown }}
+      - name: Merge me!
+        uses: ridedott/merge-me-action@v2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

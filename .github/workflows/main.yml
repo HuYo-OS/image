@@ -33,7 +33,7 @@ jobs:
         if: steps.calibre.outputs.markdown != ''
         uses: peter-evans/create-pull-request@v3
         with:
-          title: '[ci skip] 🛠 压缩图片'
+          title: '🛠 压缩图片'
           branch-suffix: timestamp
           commit-message: '🛠 压缩图片'
           body: ${{ steps.calibre.outputs.markdown }}
